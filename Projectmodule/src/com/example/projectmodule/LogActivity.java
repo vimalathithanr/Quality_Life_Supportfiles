@@ -91,7 +91,10 @@ public class LogActivity extends ListActivity {
 				String pid = ((TextView) view.findViewById(R.id.name))
 						.getText().toString();
 				
+				if (pid.substring(1, 4)=="2013")
 				pid = pid.substring(0, 1);
+				else if(pid.substring(2, 5)=="2013")
+					pid = pid.substring(0, 2);
 
 				Intent i = new Intent(getApplicationContext(),
 						EditLogActivity.class);

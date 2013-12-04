@@ -17,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -27,11 +28,9 @@ public class RemoveUserActivity extends Activity {
 
 	EditText inputDesc;
 	Button deleteButton;
-	
-	Spinner s = (Spinner) findViewById(R.id.spinner1);
-    SpinnerAdapter adapter;
-	
-    ArrayList<HashMap<String, String>> productsList;
+
+	ArrayList<HashMap<String, String>> productsList;
+	ArrayList<String> arrayList1 = new ArrayList<String>();
 
 	String pid;
 
@@ -41,8 +40,6 @@ public class RemoveUserActivity extends Activity {
 	// JSON parser class
 	JSONParser jsonParser = new JSONParser();
 
-	// single product url
-	private static final String url_product_detials = "http://www.cs.indiana.edu/cgi-pub/vrajasek/Pervasive-Project/QViz/php/UserActivity.php";
 	// url to update product
 	private static final String url_update_product = "http://www.cs.indiana.edu/cgi-pub/vrajasek/Pervasive-Project/QViz/php/UpdateUser.php";
 
@@ -50,14 +47,14 @@ public class RemoveUserActivity extends Activity {
 	private static final String TAG_SUCCESS = "success";
 	private static final String TAG_PRODUCT = "products";
 	private static final String TAG_PID = "RFID";
-	//private static final String TAG_ActivityID = "ActivityID";
-	private static final String TAG_NAME = "IsQualityTime";
+	// private static final String TAG_ActivityID = "ActivityID";
+	private static final String TAG_NAME = "UserName";
 	private static final String TAG_DESCRIPTION = "Comments";
 	private static final String TAG_USERNAME = "UserName";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-	
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.remove_user);
 
@@ -65,13 +62,15 @@ public class RemoveUserActivity extends Activity {
 		deleteButton = (Button) findViewById(R.id.deleteButton);
 
 		// getting product details from intent
-		//Intent i = getIntent();
+		Intent i = getIntent();
+
 
 		// getting product id (pid) from intent
-		//pid = i.getStringExtra(TAG_PID);
-		
+		 pid = i.getStringExtra(TAG_NAME);
+			System.out.println("PIDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" + pid);
+
 		// Getting complete product details in background thread
-		new GetProductDetails().execute();
+		//new GetProductDetails().execute();
 
 		// save button click event
 		deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -82,159 +81,70 @@ public class RemoveUserActivity extends Activity {
 			}
 		});
 	}
+	/**
+	 * Background Async Task to Save product Details
+	 * */
+
+	// Vimal - update pid with Username
+	class SaveProductDetails extends AsyncTask<String, String, String> {
 
 		/**
-		 * Background Async Task to Get complete product details
+		 * Before starting background thread Show Progress Dialog
 		 * */
-		class GetProductDetails extends AsyncTask<String, String, String> {
-
-			/**
-			 * Before starting background thread Show Progress Dialog
-			 * */
-			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				pDialog = new ProgressDialog(RemoveUserActivity.this);
-				pDialog.setMessage("Loading all the Users... Please wait...");
-				pDialog.setIndeterminate(false);
-				pDialog.setCancelable(true);
-				pDialog.show();
-			}
-
-			/**
-			 * Getting product details in background thread
-			 * */
-			protected String doInBackground(String... params) {
-
-				// updating UI from Background Thread
-				runOnUiThread(new Runnable() {
-					public void run() {
-						// Check for success tag
-
-						try {
-							// Building Parameters
-							//String ActivityID = pid;
-							List<NameValuePair> params = new ArrayList<NameValuePair>();
-
-							JSONObject json = jsonParser.makeHttpRequest(url_product_detials, "GET", params);
-							Log.d("Single Product Details", json.toString());
-
-			                int success = json.getInt(TAG_SUCCESS);
-		                
-							if (success == 1) {
-								// successfully received product details
-								
-								JSONArray products = json
-										.getJSONArray(TAG_PRODUCT); // JSON
-																	// Array
-
-			                    for (int i = 0; i < products.length(); i++) {
-			                        JSONObject c = products.getJSONObject(i);
-			 
-			                        String id = c.getString(TAG_PID);
-			                        String userName = c.getString(TAG_USERNAME);
-			 
-			                        // creating new HashMap
-			                        HashMap<String, String> map = new HashMap<String, String>();
-			 
-			                        // adding each child node to HashMap key => value
-			                        map.put(TAG_PID, id);
-			                        map.put(TAG_USERNAME, userName);
-			                        
-
-									s.setAdapter(adapter);
-									//adapter.add(userName);
-			 
-			                        // adding HashList to ArrayList
-			                        productsList.add(map);
-
-							} 
-							}else {
-								// product with pid not found
-							}
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-					}
-				});
-
-				return null;
-			}
-
-			/**
-			 * After completing background task Dismiss the progress dialog
-			 * **/
-			protected void onPostExecute(String file_url) {
-				// dismiss the dialog once got all details
-				pDialog.dismiss();
-			}
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			pDialog = new ProgressDialog(RemoveUserActivity.this);
+			pDialog.setMessage("Deleting...");
+			pDialog.setIndeterminate(false);
+			pDialog.setCancelable(true);
+			pDialog.show();
 		}
 
 		/**
-		 * Background Async Task to Save product Details
+		 * Saving product
 		 * */
-		
-		//Vimal - update pid with Username
-		class SaveProductDetails extends AsyncTask<String, String, String> {
+		protected String doInBackground(String... args) {
 
-			/**
-			 * Before starting background thread Show Progress Dialog
-			 * */
-			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				pDialog = new ProgressDialog(RemoveUserActivity.this);
-				pDialog.setMessage("Deleting...");
-				pDialog.setIndeterminate(false);
-				pDialog.setCancelable(true);
-				pDialog.show();
-			}
+			// getting updated data from EditTexts
+			String UserName = pid;
 
-			/**
-			 * Saving product
-			 * */
-			protected String doInBackground(String... args) {
+			// Building Parameters
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair(TAG_USERNAME, UserName));
 
-				// getting updated data from EditTexts
-				String UserName = pid;
+			// sending modified data through http request
+			// Notice that update product url accepts POST method
+			JSONObject json = jsonParser.makeHttpRequest(url_update_product,
+					"POST", params);
 
-				// Building Parameters
-				List<NameValuePair> params = new ArrayList<NameValuePair>();
-				params.add(new BasicNameValuePair(TAG_USERNAME, UserName));
+			// check json success tag
+			try {
+				int success = json.getInt(TAG_SUCCESS);
 
-				// sending modified data through http request
-				// Notice that update product url accepts POST method
-				JSONObject json = jsonParser.makeHttpRequest(
-						url_update_product, "POST", params);
-
-				// check json success tag
-				try {
-					int success = json.getInt(TAG_SUCCESS);
-
-					if (success == 1) {
-						// successfully updated
-						Intent i = getIntent();
-						// send result code 100 to notify about product update
-						setResult(100, i);
-						finish();
-					} else {
-						// failed to update product
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
+				if (success == 1) {
+					// successfully updated
+					Intent i = getIntent();
+					// send result code 100 to notify about product update
+					setResult(100, i);
+					finish();
+				} else {
+					// failed to update product
 				}
-
-				return null;
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
 
-			/**
-			 * After completing background task Dismiss the progress dialog
-			 * **/
-			protected void onPostExecute(String file_url) {
-				// dismiss the dialog once product updated
-				pDialog.dismiss();
-			}
+			return null;
 		}
 
-	
+		/**
+		 * After completing background task Dismiss the progress dialog
+		 * **/
+		protected void onPostExecute(String file_url) {
+			// dismiss the dialog once product updated
+			pDialog.dismiss();
+		}
+	}
+
 }

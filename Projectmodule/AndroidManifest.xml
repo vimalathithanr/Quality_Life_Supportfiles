@@ -50,6 +50,11 @@
             android:label="@string/app_name" >
         </activity>
         
+                <activity
+            android:name="com.example.projectmodule.RemoveUserActivity"
+            android:label="@string/app_name" >
+        </activity>
+        
     </application>
 
     <!--  Internet Permissions -->
