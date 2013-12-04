@@ -27,11 +27,12 @@ public final class R {
         public static final int adminButton=0x7f070008;
         public static final int btnSave=0x7f07000f;
         public static final int button1=0x7f070016;
-        public static final int deleteButton=0x7f070013;
-        public static final int editText1=0x7f070014;
-        public static final int imageButton1=0x7f070015;
+        public static final int buttonAdd=0x7f070017;
+        public static final int deleteButton=0x7f070014;
+        public static final int editTextRFID=0x7f070015;
+        public static final int editTextUser=0x7f070018;
         public static final int inputDesc=0x7f07000e;
-        public static final int menu_settings=0x7f070018;
+        public static final int menu_settings=0x7f07001c;
         public static final int name=0x7f070011;
         public static final int outputButton=0x7f070007;
         public static final int pid=0x7f070010;
@@ -41,9 +42,12 @@ public final class R {
         public static final int rd_=0x7f070009;
         public static final int rd_2=0x7f07000a;
         public static final int removeButton=0x7f070003;
-        public static final int textLabel=0x7f070012;
+        public static final int textLabel=0x7f070013;
+        public static final int textUser=0x7f070012;
         public static final int textView1=0x7f070000;
-        public static final int webview=0x7f070017;
+        public static final int textViewRFID=0x7f07001a;
+        public static final int textViewUser=0x7f070019;
+        public static final int webview=0x7f07001b;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;

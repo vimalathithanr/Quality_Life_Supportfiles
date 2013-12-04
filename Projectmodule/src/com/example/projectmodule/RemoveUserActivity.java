@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 
 public class RemoveUserActivity extends Activity {
 
@@ -69,9 +71,10 @@ public class RemoveUserActivity extends Activity {
 		 pid = i.getStringExtra(TAG_NAME);
 			System.out.println("PIDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" + pid);
 
-		// Getting complete product details in background thread
-		//new GetProductDetails().execute();
-
+			TextView textview=(TextView)findViewById(R.id.textUser);
+			textview.setTextColor(Color.BLUE);
+			textview.setText(pid);       //This is working fine
+		
 		// save button click event
 		deleteButton.setOnClickListener(new View.OnClickListener() {
 			@Override
