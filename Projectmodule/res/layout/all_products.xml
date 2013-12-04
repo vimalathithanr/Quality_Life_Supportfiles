@@ -11,14 +11,14 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_margin="5dp"
-      android:text="Date          Start Time  End Time    Users"
+      android:text="Date : [Type] Message"
       android:textColor="#000000"
       android:textSize="20sp" />
     
     <ListView
         android:id="@android:id/list"
         android:layout_width="fill_parent"
-        android:background="#00a2ff"
+        android:background="#a5efff"
         android:layout_height="wrap_content"/>
  
 </LinearLayout>
