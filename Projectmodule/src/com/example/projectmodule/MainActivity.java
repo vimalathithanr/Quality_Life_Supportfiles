@@ -58,6 +58,8 @@ public class MainActivity extends Activity {
 		TimerTask task = new TimerTask() {
 			@Override
 			public void run() {
+				MessageHandler mh = new MessageHandler();
+				mh.GetLatest();
 				//new MessageHander().execute();
 			}
 		};

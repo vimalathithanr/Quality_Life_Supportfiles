@@ -7,14 +7,15 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
-import org.json.JSONArray;
-import org.json.JSONException;
+
+import android.util.Log;
+
 
 
 public class MessageHandler {
 	
 	private int msgID;
-	private String getURL;
+	private String URL;
 	private HashMap<String, String> msg;
 	JSONParser jParser;
 	
@@ -22,7 +23,7 @@ public class MessageHandler {
 	{
 		msgID = 0;
 		jParser = new JSONParser();
-		getURL = "http://www.cs.indiana.edu/cgi-pub/vrajasek/Pervasive-Project/QViz/php/ActivityLog.php";
+		URL = "http://www.cs.indiana.edu/cgi-pub/vrajasek/Pervasive-Project/QViz/php/MessageQueue.php";
 	}
 	
 	
@@ -31,8 +32,34 @@ public class MessageHandler {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("ID","900"));
 		
-		JSONObject json = jParser.makeHttpRequest(getURL, "GET", params);
+		JSONObject json = jParser.makeHttpRequest(URL, "GET", params);
 		
+		try{
+		Log.d("Latest Message :", json.toString());
+		}
+		catch(Exception e)
+		{
+			Log.d("Error :", e.getMessage());
+		}
 	}
+	
+	
+	
+	public void AckMsg(String msgID)
+	{
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("ID",msgID));
+		
+		JSONObject json = jParser.makeHttpRequest(URL, "GET", params);
+		
+		try{
+		Log.d("Ack Message :", json.toString());
+		}
+		catch(Exception e)
+		{
+			Log.d("Error :", e.getMessage());
+		}
+	}
+		
 
 }
