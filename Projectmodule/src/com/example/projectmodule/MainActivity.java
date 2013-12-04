@@ -1,12 +1,28 @@
 package com.example.projectmodule;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import org.apache.http.NameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +35,8 @@ public class MainActivity extends Activity {
 	ImageButton removeButton;
 	ImageButton outputButton;
 	ImageButton adminButton;
+	Timer timer;
+
 	
 	@SuppressLint("NewApi")
 	@Override
@@ -35,7 +53,15 @@ public class MainActivity extends Activity {
 		removeButton = (ImageButton) findViewById(R.id.removeButton);
 		outputButton = (ImageButton) findViewById(R.id.outputButton);
 		adminButton = (ImageButton) findViewById(R.id.adminButton);
+		timer = new Timer();
 		
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				//new MessageHander().execute();
+			}
+		};
+		timer.scheduleAtFixedRate(task, 5000, 5000);
  
         // view products click event
 		addButton.setOnClickListener(new View.OnClickListener() {
@@ -97,5 +123,8 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
+	
+	
+	
 
 }
