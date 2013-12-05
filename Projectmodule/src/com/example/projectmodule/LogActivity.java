@@ -40,7 +40,7 @@ public class LogActivity extends ListActivity {
 
 	// Creating JSON Parser object
 	JSONParser jParser = new JSONParser();
-	//JSONParser jParser1 = new JSONParser();
+	// JSONParser jParser1 = new JSONParser();
 	Helper helper = new Helper();
 
 	ArrayList<HashMap<String, String>> productsList;
@@ -90,11 +90,16 @@ public class LogActivity extends ListActivity {
 				// getting values from selected ListItem
 				String pid = ((TextView) view.findViewById(R.id.name))
 						.getText().toString();
-				
-				if (pid.substring(1, 4)=="2013")
-				pid = pid.substring(0, 1);
-				else if(pid.substring(2, 5)=="2013")
+
+				System.out.println("LOGGGGGGGGGGGGGGGGGGGGGGGGGG" + pid.substring(1, 5));
+				System.out.println("LOGGGGGGGGGGGGGGGGGGGGGGGGGG" + pid.substring(2, 6));
+				if (pid.substring(1, 8).equals("   2013")) {
+					pid = pid.substring(0, 1);
+					System.out.println("111111111111111144444444444444444"+pid);
+				} else if (pid.substring(2, 9).equals("   2013")) {
 					pid = pid.substring(0, 2);
+					System.out.println("22222222222222255555555555555555555"+pid);
+				}
 
 				Intent i = new Intent(getApplicationContext(),
 						EditLogActivity.class);
@@ -176,7 +181,7 @@ public class LogActivity extends ListActivity {
 
 							eachRow.put(
 									TAG_NAME,
-									c.getString(TAG_PID)
+									c.getString(TAG_PID)+ "   "
 											+ c.getString(TAG_MAXTIME)
 											+ "       " + minTime.substring(11)
 											+ "       " + c.getString(TAG_NAME));
@@ -247,7 +252,7 @@ public class LogActivity extends ListActivity {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			pDialog = new ProgressDialog(LogActivity.this);
-			pDialog.setMessage("Creating Product..");
+			pDialog.setMessage("Creating..");
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(true);
 			pDialog.show();

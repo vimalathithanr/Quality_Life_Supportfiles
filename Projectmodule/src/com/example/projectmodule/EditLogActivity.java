@@ -90,7 +90,7 @@ public class EditLogActivity extends Activity {
 			protected void onPreExecute() {
 				super.onPreExecute();
 				pDialog = new ProgressDialog(EditLogActivity.this);
-				pDialog.setMessage("Loading product details. Please wait...");
+				pDialog.setMessage("Loading. Please wait...");
 				pDialog.setIndeterminate(false);
 				pDialog.setCancelable(true);
 				pDialog.show();
@@ -208,7 +208,7 @@ public class EditLogActivity extends Activity {
 			protected void onPreExecute() {
 				super.onPreExecute();
 				pDialog = new ProgressDialog(EditLogActivity.this);
-				pDialog.setMessage("Saving product ...");
+				pDialog.setMessage("Saving changes ...");
 				pDialog.setIndeterminate(false);
 				pDialog.setCancelable(true);
 				pDialog.show();

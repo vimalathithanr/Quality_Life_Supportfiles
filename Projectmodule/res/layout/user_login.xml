@@ -40,15 +40,15 @@
         android:layout_alignLeft="@+id/button1"
         android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
-        android:text="User Name" />
+        android:text="RFID" />
 
     <TextView
         android:id="@+id/textViewRFID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewUser"
-        android:layout_below="@+id/editTextUser"
-        android:layout_marginTop="15dp"
-        android:text="RFID Number" />
+        android:layout_alignBaseline="@+id/editTextUser"
+        android:layout_alignBottom="@+id/editTextUser"
+        android:layout_alignParentLeft="true"
+        android:text="User Name" />
 
 </RelativeLayout>
